@@ -9,10 +9,10 @@
 <body>
 <div align="center">
 <table>
-<tr><td>新增站點</td></tr>
-<tr><td>站點列表</td></tr>
-<tr><td>新增護士</td></tr>
-<tr><td>護士列表</td></tr>
+<tr><td><a href="addStation">新增站點</a></td></tr>
+<tr><td><a href="stationList">站點列表</a></td></tr>
+<tr><td><a href="addNurse">新增護士</a></td></tr>
+<tr><td><a href="nursesList">護士列表</a></td></tr>
 </table>
 </div>
 </body>
