@@ -35,7 +35,7 @@
 			</tr>
 			<tr>
 				<td>護士姓名</td>
-				<td><input type="text" id="nurseName" name="nurseName" /></td>
+				<td><input type="text" id="nursesName" name="nursesName" /></td>
 			</tr>
 		</table>
 		<table>
@@ -46,12 +46,12 @@
 				<td rowspan="2"><select multiple="multiple" size="10"
 					id="stationList" name="stationList" class="selectZone">
 						<c:forEach var="station" items="${stationList}">
-							<option value="${station.stationName}">${station.stationName}</option>
+							<option value="${station.stationNo}">${station.stationName}</option>
 						</c:forEach>
 				</select></td>
 				<td><input type="button" value=">>" id="btnRight" /></td>
 				<td rowspan="2"><select multiple="multiple" size="10"
-					id="chooseStationList" name="chooseStationList" class="selectZone">
+					id="cStationList" name="cStationList" class="selectZone">
 
 				</select></td>
 			</tr>
@@ -65,11 +65,11 @@
 				function() {
 					$('#stationList option:selected').each(
 							function() {
-								$("#chooseStationList").append(
+								$("#cStationList").append(
 										"<option value='" + $(this).val()
 												+ "'>" + $(this).text()
 												+ "</option");
-								$("#chooseStationList option:last").attr(
+								$("#cStationList option:last").attr(
 										"selected", "selected");
 								$(this).remove();
 							});
@@ -77,7 +77,7 @@
 
 		$('#btnLeft').click(
 				function() {
-					$('#chooseStationList option:selected').each(
+					$('#cStationList option:selected').each(
 							function() {
 								$("#stationList").append(
 										"<option value='" + $(this).val()
@@ -90,10 +90,10 @@
 				});
 		function checkForm() {
 			var check = true;
-			if ($('#employeeNo').val() == null ||$('#employeeNo').val()=='') {
+			if ($('#employeeNo').val() == null || $('#employeeNo').val() == '') {
 				check = false;
 			}
-			if ($('#nurseName').val() == null||$('#nurseName').val()=='') {
+			if ($('#nursesName').val() == null || $('#nursesName').val() == '') {
 				check = false;
 			}
 			if (!check) {

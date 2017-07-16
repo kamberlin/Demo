@@ -26,13 +26,23 @@ public class StationDAO extends HibernateDaoSupport {
 
 	public void add(Station station) {
 		Session session = sessionFactory.openSession();
-		//Transaction tx = session.beginTransaction();
+		// Transaction tx = session.beginTransaction();
 		session.save(station);
-		//tx.commit();
+		// tx.commit();
 		session.close();
 	}
 
-	public void delete(String stationName) {
+	public boolean delete(int stationNo) {
+		boolean flag = false;
+		String sql = " delete Station where station_no=?";
+		Session session = sessionFactory.openSession();
+		Query<Station> query = session.createQuery(sql);
+		query.setParameter(1, stationNo);
+		int result = query.executeUpdate();
+		if (result > 0) {
+			flag = true;
+		}
+		return flag;
 
 	}
 
@@ -44,7 +54,8 @@ public class StationDAO extends HibernateDaoSupport {
 		session.close();
 		return list;
 	}
-	public ArrayList<Station> queryNursesOnSite(String employeeNo){
+
+	public ArrayList<Station> queryNursesOnSite(String employeeNo) {
 		String sql = "from Stationdetail where employee_no=?";
 		Session session = sessionFactory.openSession();
 		Query<Station> query = session.createQuery(sql);

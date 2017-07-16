@@ -33,8 +33,20 @@
 	<bean id="stationDAO" class="bionime.dao.StationDAO">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
+	<bean id="nursesDAO" class="bionime.dao.NursesDAO">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="stationDetailDAO" class="bionime.dao.StationDetailDAO">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
 	<bean id="stationService" class="bionime.service.StationService">
 		<property name="stationDao" ref="stationDAO"></property>
+	</bean>
+	<bean id="nursesService" class="bionime.service.NursesService">
+		<property name="nursesDao" ref="nursesDAO"></property>
+	</bean>
+	<bean id="stationDetailService" class="bionime.service.StationDetailService">
+		<property name="stationDetailDao" ref="stationDetailDAO"></property>
 	</bean>
 	<!-- 配置Controller要掃描的package路徑 -->
 	<context:component-scan base-package="bionime.*" />
