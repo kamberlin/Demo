@@ -24,7 +24,7 @@ public class StationAction {
 	}
 
 	@RequestMapping("/insertStation")
-	public String insert(@RequestParam("stationName") String stationName, Model model) {
+	public String insert(@RequestParam(required=false,name="stationName") String stationName, Model model) {
 		Station station = new Station();
 		station.setStationName(stationName);
 		station.setUpdateTime(new Date());

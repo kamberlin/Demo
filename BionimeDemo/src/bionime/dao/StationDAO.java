@@ -44,5 +44,14 @@ public class StationDAO extends HibernateDaoSupport {
 		session.close();
 		return list;
 	}
+	public ArrayList<Station> queryNursesOnSite(String employeeNo){
+		String sql = "from Stationdetail where employee_no=?";
+		Session session = sessionFactory.openSession();
+		Query<Station> query = session.createQuery(sql);
+		query.setParameter(1, employeeNo);
+		ArrayList<Station> list = (ArrayList<Station>) query.list();
+		session.close();
+		return list;
+	}
 
 }
