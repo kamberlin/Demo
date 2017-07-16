@@ -25,7 +25,7 @@ public class StationAction {
 		Station station = new Station();
 		station.setStationName(stationName);
 		service.add(station);
-		model.addAttribute("result", "success");
+		model.addAttribute("result", true);
 		return "addStation";
 	}
 }
