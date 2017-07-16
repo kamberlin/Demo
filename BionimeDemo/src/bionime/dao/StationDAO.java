@@ -1,10 +1,12 @@
 package bionime.dao;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 
@@ -24,9 +26,9 @@ public class StationDAO extends HibernateDaoSupport {
 
 	public void add(Station station) {
 		Session session = sessionFactory.openSession();
-		Transaction tx = session.beginTransaction();
+		//Transaction tx = session.beginTransaction();
 		session.save(station);
-		tx.commit();
+		//tx.commit();
 		session.close();
 	}
 
@@ -34,8 +36,13 @@ public class StationDAO extends HibernateDaoSupport {
 
 	}
 
-	public ArrayList<String> query() {
-		return null;
+	public ArrayList<Station> query() {
+		String sql = "from Station";
+		Session session = sessionFactory.openSession();
+		Query<Station> query = session.createQuery(sql);
+		ArrayList<Station> list = (ArrayList<Station>) query.list();
+		session.close();
+		return list;
 	}
-	
+
 }

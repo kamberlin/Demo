@@ -1,5 +1,8 @@
 package bionime.action;
 
+import java.util.ArrayList;
+import java.util.Date;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
@@ -24,8 +27,16 @@ public class StationAction {
 	public String insert(@RequestParam("stationName") String stationName, Model model) {
 		Station station = new Station();
 		station.setStationName(stationName);
+		station.setUpdateTime(new Date());
 		service.add(station);
 		model.addAttribute("result", true);
 		return "addStation";
+	}
+
+	@RequestMapping("/stationList")
+	public String showList(Model model) {
+		ArrayList<Station> stationList = service.query();
+		model.addAttribute("stationList", stationList);
+		return "stationList";
 	}
 }

@@ -1,5 +1,5 @@
 package bionime.enity;
-// Generated 2017/7/15 �U�� 03:39:19 by Hibernate Tools 5.2.3.Final
+// Generated 2017/7/16 �W�� 09:32:48 by Hibernate Tools 5.2.3.Final
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
@@ -27,7 +27,8 @@ public class Stationdetail implements java.io.Serializable {
 	@EmbeddedId
 
 	@AttributeOverrides({ @AttributeOverride(name = "stationNo", column = @Column(name = "station_no")),
-			@AttributeOverride(name = "employeeNo", column = @Column(name = "employee_no", length = 50)) })
+			@AttributeOverride(name = "employeeNo", column = @Column(name = "employee_no", length = 50)),
+			@AttributeOverride(name = "updateTime", column = @Column(name = "update_time", length = 19)) })
 	public StationdetailId getId() {
 		return this.id;
 	}

@@ -1,5 +1,7 @@
 package bionime.service;
 
+import java.util.ArrayList;
+
 import bionime.dao.StationDAO;
 import bionime.enity.Station;
 
@@ -9,7 +11,9 @@ public class StationService {
 	public void add(Station station) {
 		stationDao.add(station);
 	}
-
+	public ArrayList<Station> query(){
+		return stationDao.query();
+	}
 	public StationDAO getStationDao() {
 		return stationDao;
 	}

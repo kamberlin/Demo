@@ -1,6 +1,7 @@
 package bionime.enity;
-// Generated 2017/7/15 �U�� 03:39:19 by Hibernate Tools 5.2.3.Final
+// Generated 2017/7/16 �W�� 09:32:48 by Hibernate Tools 5.2.3.Final
 
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
@@ -12,13 +13,15 @@ public class NursesId implements java.io.Serializable {
 
 	private String employeeNo;
 	private String nursesName;
+	private Date updateTime;
 
 	public NursesId() {
 	}
 
-	public NursesId(String employeeNo, String nursesName) {
+	public NursesId(String employeeNo, String nursesName, Date updateTime) {
 		this.employeeNo = employeeNo;
 		this.nursesName = nursesName;
+		this.updateTime = updateTime;
 	}
 
 	@Column(name = "Employee_no", length = 50)
@@ -39,6 +42,15 @@ public class NursesId implements java.io.Serializable {
 		this.nursesName = nursesName;
 	}
 
+	@Column(name = "update_time", length = 19)
+	public Date getUpdateTime() {
+		return this.updateTime;
+	}
+
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
+
 	public boolean equals(Object other) {
 		if ((this == other))
 			return true;
@@ -50,9 +62,11 @@ public class NursesId implements java.io.Serializable {
 
 		return ((this.getEmployeeNo() == castOther.getEmployeeNo()) || (this.getEmployeeNo() != null
 				&& castOther.getEmployeeNo() != null && this.getEmployeeNo().equals(castOther.getEmployeeNo())))
-				&& ((this.getNursesName() == castOther.getNursesName())
-						|| (this.getNursesName() != null && castOther.getNursesName() != null
-								&& this.getNursesName().equals(castOther.getNursesName())));
+				&& ((this.getNursesName() == castOther.getNursesName()) || (this.getNursesName() != null
+						&& castOther.getNursesName() != null && this.getNursesName().equals(castOther.getNursesName())))
+				&& ((this.getUpdateTime() == castOther.getUpdateTime())
+						|| (this.getUpdateTime() != null && castOther.getUpdateTime() != null
+								&& this.getUpdateTime().equals(castOther.getUpdateTime())));
 	}
 
 	public int hashCode() {
@@ -60,6 +74,7 @@ public class NursesId implements java.io.Serializable {
 
 		result = 37 * result + (getEmployeeNo() == null ? 0 : this.getEmployeeNo().hashCode());
 		result = 37 * result + (getNursesName() == null ? 0 : this.getNursesName().hashCode());
+		result = 37 * result + (getUpdateTime() == null ? 0 : this.getUpdateTime().hashCode());
 		return result;
 	}
 
