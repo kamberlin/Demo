@@ -9,7 +9,7 @@
 <style>
 .selectZone {
 	width: 150px;
-	height:200px;
+	height: 200px;
 }
 </style>
 <c:if test="${result}">
@@ -21,39 +21,44 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body>
-	<form action="insertNurse" method="post" class="main">
-			<table>
-				<tr>
-					<td><input type="button" value="返回"
-						onclick="location.href='index.jsp'" /></td>
-					<td><input type="submit" value="新增" /></td>
-				</tr>
-				<tr>
-					<td>員工編號</td>
-					<td><input type="text" name="employeeNo" /></td>
-				</tr>
-				<tr>
-					<td>護士姓名</td>
-					<td><input type="text" name="nurseName" /></td>
-				</tr>
-				</table>
-				<table>
-				<tr><td colspan="3">分配站點</td></tr>
-				<tr>
-					<td rowspan="2"><select multiple="multiple" size="10" id="stationList"
-						name="stationList" class="selectZone">
-							<c:forEach var="station" items="${stationList}">
-								<option value="${station.stationName}">${station.stationName}</option>
-							</c:forEach>
-					</select></td>
-					<td ><input type="button" value=">>" id="btnRight" /></td>
-					<td rowspan="2"><select multiple="multiple" size="10"
-						id="chooseStationList" name="chooseStationList" class="selectZone">
+	<form action="insertNurse" method="post" class="main"
+		onsubmit="return checkForm();">
+		<table>
+			<tr>
+				<td><input type="button" value="返回"
+					onclick="location.href='index.jsp'" /></td>
+				<td><input type="submit" value="新增" /></td>
+			</tr>
+			<tr>
+				<td>員工編號</td>
+				<td><input type="text" id="employeeNo" name="employeeNo" /></td>
+			</tr>
+			<tr>
+				<td>護士姓名</td>
+				<td><input type="text" id="nurseName" name="nurseName" /></td>
+			</tr>
+		</table>
+		<table>
+			<tr>
+				<td colspan="3">分配站點</td>
+			</tr>
+			<tr>
+				<td rowspan="2"><select multiple="multiple" size="10"
+					id="stationList" name="stationList" class="selectZone">
+						<c:forEach var="station" items="${stationList}">
+							<option value="${station.stationName}">${station.stationName}</option>
+						</c:forEach>
+				</select></td>
+				<td><input type="button" value=">>" id="btnRight" /></td>
+				<td rowspan="2"><select multiple="multiple" size="10"
+					id="chooseStationList" name="chooseStationList" class="selectZone">
 
-					</select></td>
-				</tr>
-				<tr><td><input type="button" value="&lt;&lt;" id="btnLeft" /></td></tr>
-			</table>
+				</select></td>
+			</tr>
+			<tr>
+				<td><input type="button" value="&lt;&lt;" id="btnLeft" /></td>
+			</tr>
+		</table>
 	</form>
 	<script type="text/javascript">
 		$('#btnRight').click(
@@ -83,6 +88,19 @@
 										"selected");
 							});
 				});
+		function checkForm() {
+			var check = true;
+			if ($('#employeeNo').val() == null ||$('#employeeNo').val()=='') {
+				check = false;
+			}
+			if ($('#nurseName').val() == null||$('#nurseName').val()=='') {
+				check = false;
+			}
+			if (!check) {
+				alert("請確認所有欄位已填入");
+				return false;
+			}
+		}
 	</script>
 </body>
 </html>
