@@ -48,7 +48,9 @@
 	<bean id="stationDetailService" class="bionime.service.StationDetailService">
 		<property name="stationDetailDao" ref="stationDetailDAO"></property>
 	</bean>
+
 	<!-- 配置Controller要掃描的package路徑 -->
+	
 	<context:component-scan base-package="bionime.*" />
 	<context:annotation-config />
 	<mvc:annotation-driven />

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 
 import bionime.enity.Station;
+import bionime.enity.Stationdetail;
 
 public class StationDAO extends HibernateDaoSupport {
 	@Autowired
@@ -34,11 +35,13 @@ public class StationDAO extends HibernateDaoSupport {
 
 	public boolean delete(int stationNo) {
 		boolean flag = false;
-		String sql = " delete Station where station_no=?";
+		String sql = " delete Station where station_no=:stationNo";
 		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
 		Query<Station> query = session.createQuery(sql);
-		query.setParameter(1, stationNo);
+		query.setParameter("stationNo", stationNo);
 		int result = query.executeUpdate();
+		tx.commit();
 		if (result > 0) {
 			flag = true;
 		}

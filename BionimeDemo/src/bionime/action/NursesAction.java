@@ -43,11 +43,11 @@ public class NursesAction {
 	}
 
 	@RequestMapping("/deleteNurse")
-	public String deleteNurse(@RequestParam("employeeNo") String employeeNo, Model m) {
-		// ArrayList<Station> stationList = stationService.query();
-		// m.addAttribute("stationList", stationList);
+	public ModelAndView deleteNurse(@RequestParam("employeeNo") String employeeNo, Model m) {
+		nursesService.delete(employeeNo);
+		stationDetailService.deleteByNurse(employeeNo);
 		System.out.println("employeeNo=" + employeeNo);
-		return "index";
+		return new ModelAndView("redirect:/nursesList");
 	}
 	@RequestMapping("/viewNurse")
 	public String viewNurse(@RequestParam("employeeNo") String employeeNo, Model m) {

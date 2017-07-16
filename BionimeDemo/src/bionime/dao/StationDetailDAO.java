@@ -9,6 +9,7 @@ import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 
 import bionime.enity.Nurses;
 import bionime.enity.Stationdetail;
+import bionime.enity.StationdetailId;
 
 public class StationDetailDAO extends HibernateDaoSupport {
 	@Autowired
@@ -21,13 +22,39 @@ public class StationDetailDAO extends HibernateDaoSupport {
 		tx.commit();
 		session.close();
 	}
-	public boolean delete(int stationNo) {
+
+	public boolean deleteByStation(int stationNo) {
 		boolean flag = false;
-		String sql = " delete StationDetail where station_no=?";
+		Stationdetail stationdetail = new Stationdetail();
+		StationdetailId stationdetailId = new StationdetailId();
+		stationdetailId.setStationNo(stationNo);
+		stationdetail.setId(stationdetailId);
+		// System.out.println("stationNoDAO="+stationNo);
+		String sql = " delete from Stationdetail where station_no=:stationNo";
 		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
 		Query<Stationdetail> query = session.createQuery(sql);
-		query.setParameter(1, stationNo);
+		query.setParameter("stationNo", stationNo);
 		int result = query.executeUpdate();
+		System.out.println("result=" + result);
+		tx.commit();
+		if (result > 0) {
+			flag = true;
+		}
+		session.close();
+		return flag;
+
+	}
+
+	public boolean deleteByNurse(String employeeNo) {
+		boolean flag = false;
+		String sql = " delete Stationdetail where employee_no=:employeeNo";
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		Query<Stationdetail> query = session.createQuery(sql);
+		query.setParameter("employeeNo", employeeNo);
+		int result = query.executeUpdate();
+		tx.commit();
 		if (result > 0) {
 			flag = true;
 		}

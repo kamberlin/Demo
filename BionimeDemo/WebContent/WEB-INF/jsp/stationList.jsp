@@ -6,46 +6,70 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>站點列表</title>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <style>
 table {
-    border-collapse: collapse;
+	border-collapse: collapse;
 }
+
 table, th, td {
-    border: 1px solid black;
-    align: center;
-    text-align: center;
+	border: 1px solid black;
+	align: center;
+	text-align: center;
 }
-.up{
-	width:30px;
-	align:right;
+
+.up {
+	width: 30px;
+	align: right;
 	margin-left: 750px;
 }
-.buttom{
+
+.buttom {
 	margin-top: 10px;
 }
 </style>
-
+<script type="text/javascript">
+	function deleteStation(stationNo) {
+		//alert(employeeNo);
+		$('#stationNo').val(stationNo);
+		//alert("hello1");
+		$('#mainForm').attr("action", "deleteStation");
+		//alert("hello2");
+		$('#mainForm').submit();
+	}
+	function viewStation(stationNo) {
+		//alert(employeeNo);
+		$('#stationNo').val(stationNo);
+		//alert("hello1");
+		$('#mainForm').attr("action", "viewStation");
+		//alert("hello2");
+		$('#mainForm').submit();
+	}
+</script>
 </head>
 <body>
-	<form action="" method="post">
+	<form action="" method="post" id="mainForm">
 		<div class="up">
-		<input type="button" value="返回" onclick="location.href='index.jsp'" />
+			<input type="button" value="返回" onclick="location.href='index.jsp'" />
 		</div>
 		<div class="buttom">
-		<table width="800px">
-			<tr>
-				<th width="20%">站點</th>
-				<th width="50%">修改時間</th>
-				<th width="30%">動作</th>
-			</tr>
-			<c:forEach var="station" items="${stationList}">
+			<table width="800px">
 				<tr>
-					<td>${station.stationName}</td>
-					<td>${station.updateTime}</td>
-					<td><a href="">View</a> <a href="">Del</a></td>
+					<th width="20%">站點</th>
+					<th width="50%">修改時間</th>
+					<th width="30%">動作</th>
 				</tr>
-			</c:forEach>
-		</table>
+				<c:forEach var="station" items="${stationList}">
+					<tr>
+						<td>${station.stationName}</td>
+						<td>${station.updateTime}</td>
+						<td><a href="#" onclick="viewStation('${station.stationNo}')">View</a>
+							<a href="#" onclick="deleteStation('${station.stationNo}')">Del</a></td>
+					</tr>
+				</c:forEach>
+			</table>
+			<input type="hidden" name="stationNo" id="stationNo"/>
 		</div>
 	</form>
 </body>

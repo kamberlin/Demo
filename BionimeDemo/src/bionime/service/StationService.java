@@ -21,5 +21,7 @@ public class StationService {
 	public void setStationDao(StationDAO stationDao) {
 		this.stationDao = stationDao;
 	}
-	
+	public boolean delete(int stationNo) {
+		return stationDao.delete(stationNo);
+	}
 }

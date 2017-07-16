@@ -35,11 +35,13 @@ public class NursesDAO extends HibernateDaoSupport {
 
 	public boolean delete(String employeeNo) {
 		boolean flag = false;
-		String sql = " delete Nurses where employee_no=?";
+		String sql = " delete Nurses where employee_no=:employeeNo";
 		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
 		Query<Nurses> query = session.createQuery(sql);
-		query.setParameter(1, employeeNo);
+		query.setParameter("employeeNo", employeeNo);
 		int result = query.executeUpdate();
+		tx.commit();
 		if (result > 0) {
 			flag = true;
 		}
