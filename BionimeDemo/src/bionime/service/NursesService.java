@@ -19,8 +19,8 @@ public class NursesService {
 	public void setNursesDao(NursesDAO nursesDao) {
 		this.nursesDao = nursesDao;
 	}
-	public ArrayList<Nurses> query(){
-		return nursesDao.query();
+	public ArrayList<Nurses> queryAll(){
+		return nursesDao.queryAll();
 	}
 	public void delete(String employeeNo) {
 		nursesDao.delete(employeeNo);

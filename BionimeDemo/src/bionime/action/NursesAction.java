@@ -31,14 +31,14 @@ public class NursesAction {
 
 	@RequestMapping("/nursesList")
 	public String showList(Model m) {
-		ArrayList<Nurses> nursesList = nursesService.query();
+		ArrayList<Nurses> nursesList = nursesService.queryAll();
 		m.addAttribute("nursesList", nursesList);
 		return "nursesList";
 	}
 
 	@RequestMapping("/addNurse")
 	public void addNurse(Model m) {
-		ArrayList<Station> stationList = stationService.query();
+		ArrayList<Station> stationList = stationService.queryAll();
 		m.addAttribute("stationList", stationList);
 	}
 

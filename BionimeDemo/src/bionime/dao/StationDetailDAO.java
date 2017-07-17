@@ -1,5 +1,7 @@
 package bionime.dao;
 
+import java.util.ArrayList;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -8,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 
 import bionime.enity.Nurses;
+import bionime.enity.Station;
 import bionime.enity.Stationdetail;
 import bionime.enity.StationdetailId;
 
@@ -61,4 +64,25 @@ public class StationDetailDAO extends HibernateDaoSupport {
 		return flag;
 
 	}
+
+	public ArrayList<Stationdetail> queryNursesOnSite(String employeeNo) {
+		String sql = "from Stationdetail where employee_no=:employeeNo";
+		Session session = sessionFactory.openSession();
+		Query<Stationdetail> query = session.createQuery(sql);
+		query.setParameter("employeeNo", employeeNo);
+		ArrayList<Stationdetail> list = (ArrayList<Stationdetail>) query.list();
+		session.close();
+		return list;
+	}
+
+	public ArrayList<Stationdetail> queryOnSiteNurses(int stationNo) {
+		String sql = "from Stationdetail where station_no=:stationNo";
+		Session session = sessionFactory.openSession();
+		Query<Stationdetail> query = session.createQuery(sql);
+		query.setParameter("stationNo", stationNo);
+		ArrayList<Stationdetail> list = (ArrayList<Stationdetail>) query.list();
+		session.close();
+		return list;
+	}
+
 }

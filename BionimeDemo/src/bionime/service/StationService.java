@@ -11,8 +11,14 @@ public class StationService {
 	public void add(Station station) {
 		stationDao.add(station);
 	}
-	public ArrayList<Station> query(){
-		return stationDao.query();
+	public ArrayList<Station> queryAll(){
+		return stationDao.queryAll();
+	}
+	public Station queryStation(int stationNo){
+		return stationDao.queryStation(stationNo);
+	}
+	public boolean modifyStation(int stationNo,String stationName) {
+		return stationDao.modifyStation(stationNo, stationName);
 	}
 	public StationDAO getStationDao() {
 		return stationDao;

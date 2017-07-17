@@ -24,7 +24,7 @@ public class NursesDAO extends HibernateDaoSupport {
 		session.close();
 	}
 
-	public ArrayList<Nurses> query() {
+	public ArrayList<Nurses> queryAll() {
 		String sql = "from Nurses";
 		Session session = sessionFactory.openSession();
 		Query<Nurses> query = session.createQuery(sql);

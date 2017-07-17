@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import bionime.enity.Station;
 import bionime.enity.Stationdetail;
 import bionime.enity.StationdetailId;
+import bionime.service.NursesService;
 import bionime.service.StationDetailService;
 import bionime.service.StationService;
 
@@ -20,6 +21,8 @@ import bionime.service.StationService;
 public class StationAction {
 	@Resource(name = "stationService")
 	private StationService stationService;
+	@Resource(name = "nursesService")
+	private NursesService nursesService;
 	@Resource(name = "stationDetailService")
 	private StationDetailService stationDetailService;
 
@@ -48,20 +51,30 @@ public class StationAction {
 		}
 		return "addStation";
 	}
+	@RequestMapping("/modifyStation")
+	public String modify(@RequestParam("stationNo") int stationNo,@RequestParam("stationName") String stationName, Model model) {
+		stationService.modifyStation(stationNo, stationName);
+		model.addAttribute("result",true);
+		//待調整
+		Station station = stationService.queryStation(stationNo);
+		ArrayList<Stationdetail> stationDetailList = stationDetailService.queryOnSiteNurses(stationNo);
+		model.addAttribute("station",station);
+		model.addAttribute("stationDetailList",stationDetailList);
+		return "stationDetail";
+	}
 
 	@RequestMapping("/viewStation")
 	public String view(@RequestParam("stationNo") int stationNo, Model model) {
-		Station station = new Station();
-		station.setStationNo(stationNo);
-		station.setUpdateTime(new Date());
-		stationService.add(station);
-		model.addAttribute("result", true);
-		return "addStation";
+		Station station = stationService.queryStation(stationNo);
+		ArrayList<Stationdetail> stationDetailList = stationDetailService.queryOnSiteNurses(stationNo);
+		model.addAttribute("station",station);
+		model.addAttribute("stationDetailList",stationDetailList);
+		return "stationDetail";
 	}
 
 	@RequestMapping("/stationList")
 	public String showList(Model model) {
-		ArrayList<Station> stationList = stationService.query();
+		ArrayList<Station> stationList = stationService.queryAll();
 		model.addAttribute("stationList", stationList);
 		return "stationList";
 	}

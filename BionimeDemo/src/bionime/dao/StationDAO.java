@@ -49,7 +49,23 @@ public class StationDAO extends HibernateDaoSupport {
 
 	}
 
-	public ArrayList<Station> query() {
+	public boolean modifyStation(int stationNo, String stationName) {
+		boolean flag = false;
+		String sql = " update Station set station_name=:stationName where station_no=:stationNo";
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		Query<Station> query = session.createQuery(sql);
+		query.setParameter("stationNo", stationNo);
+		query.setParameter("stationName", stationName);
+		int result = query.executeUpdate();
+		tx.commit();
+		if (result > 0) {
+			flag = true;
+		}
+		return flag;
+	}
+
+	public ArrayList<Station> queryAll() {
 		String sql = "from Station";
 		Session session = sessionFactory.openSession();
 		Query<Station> query = session.createQuery(sql);
@@ -58,14 +74,15 @@ public class StationDAO extends HibernateDaoSupport {
 		return list;
 	}
 
-	public ArrayList<Station> queryNursesOnSite(String employeeNo) {
-		String sql = "from Stationdetail where employee_no=?";
+	public Station queryStation(int stationNo) {
+		String sql = "from Station where station_no=:stationNo";
 		Session session = sessionFactory.openSession();
 		Query<Station> query = session.createQuery(sql);
-		query.setParameter(1, employeeNo);
-		ArrayList<Station> list = (ArrayList<Station>) query.list();
+		query.setParameter("stationNo", stationNo);
+
+		Station station = query.getSingleResult();
 		session.close();
-		return list;
+		return station;
 	}
 
 }
