@@ -12,30 +12,34 @@
 	height: 200px;
 }
 </style>
-<c:if test="${result}">
+<c:if test="${modify}">
 	<script>
-		alert("新增成功");
+		alert("編輯成功");
 	</script>
 </c:if>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body>
-	<form action="insertNurse" method="post" class="main"
+	<form action="modifyNurse" method="post" class="main"
 		onsubmit="return checkForm();">
 		<table>
 			<tr>
 				<td><input type="button" value="返回"
 					onclick="location.href='index.jsp'" /></td>
-				<td><input type="submit" value="新增" /></td>
+				<td><input type="submit" value="儲存" /></td>
 			</tr>
 			<tr>
 				<td>員工編號</td>
-				<td><input type="text" id="employeeNo" name="employeeNo" value="${nurse.id.employeeNo}"/></td>
+				<td><input type="text" id="employeeNo" name="employeeNo"
+					value="${nurse.id.employeeNo}" /><input type="hidden"
+					name="oriEmployeeNo" value="${nurse.id.employeeNo}" /></td>
 			</tr>
 			<tr>
 				<td>護士姓名</td>
-				<td><input type="text" id="nursesName" name="nursesName" value="${nurse.id.nursesName}"/></td>
+				<td><input type="text" id="nursesName" name="nursesName"
+					value="${nurse.id.nursesName}" /><input type="hidden"
+					name="oriNursesName" value="${nurse.id.nursesName}" /></td>
 			</tr>
 		</table>
 		<table>
@@ -46,15 +50,16 @@
 				<td rowspan="2"><select multiple="multiple" size="10"
 					id="stationList" name="stationList" class="selectZone">
 						<c:forEach var="station" items="${stationList}">
-							<option value="${station.stationNo}">${station.stationName}</option>
+							<option value="${station.stationNo}#${station.stationName}">${station.stationName}</option>
 						</c:forEach>
 				</select></td>
 				<td><input type="button" value=">>" id="btnRight" /></td>
 				<td rowspan="2"><select multiple="multiple" size="10"
 					id="cStationList" name="cStationList" class="selectZone">
-				<c:forEach var="onSite" items="${onSiteList}">
-				<option value="${onSite.id.stationNo}" selected="selected">${onSite.id.stationNo}</option>
-				</c:forEach>
+						<c:forEach var="onSite" items="${onSiteList}">
+							<option value="${onSite.id.stationNo}#${onSite.id.stationName}"
+								selected="selected">${onSite.id.stationName}</option>
+						</c:forEach>
 				</select></td>
 			</tr>
 			<tr>
@@ -71,8 +76,6 @@
 										"<option value='" + $(this).val()
 												+ "'>" + $(this).text()
 												+ "</option");
-								$("#cStationList option:last").attr(
-										"selected", "selected");
 								$(this).remove();
 							});
 				});
@@ -86,8 +89,6 @@
 												+ "'>" + $(this).text()
 												+ "</option");
 								$(this).remove();
-								$("#stationList option:last").attr("selected",
-										"selected");
 							});
 				});
 		function checkForm() {
@@ -101,6 +102,10 @@
 			if (!check) {
 				alert("請確認所有欄位已填入");
 				return false;
+			} else {
+				$('#cStationList option').each(function() {
+					$(this).attr("selected", "selected");
+				});
 			}
 		}
 	</script>

@@ -12,9 +12,14 @@
 	height: 200px;
 }
 </style>
-<c:if test="${result}">
+<c:if test="${insert}">
 	<script>
 		alert("新增成功");
+	</script>
+</c:if>
+<c:if test="${error}">
+	<script>
+		alert('${errorMsg}');
 	</script>
 </c:if>
 <script
@@ -46,7 +51,7 @@
 				<td rowspan="2"><select multiple="multiple" size="10"
 					id="stationList" name="stationList" class="selectZone">
 						<c:forEach var="station" items="${stationList}">
-							<option value="${station.stationNo}">${station.stationName}</option>
+							<option value="${station.stationNo}#${station.stationName}">${station.stationName}</option>
 						</c:forEach>
 				</select></td>
 				<td><input type="button" value=">>" id="btnRight" /></td>
@@ -69,8 +74,8 @@
 										"<option value='" + $(this).val()
 												+ "'>" + $(this).text()
 												+ "</option");
-								$("#cStationList option:last").attr(
-										"selected", "selected");
+								$("#cStationList option:last").attr("selected",
+										"selected");
 								$(this).remove();
 							});
 				});
@@ -99,6 +104,10 @@
 			if (!check) {
 				alert("請確認所有欄位已填入");
 				return false;
+			} else {
+				$('#cStationList option').each(function() {
+					$(this).attr("selected", "selected");
+				});
 			}
 		}
 	</script>

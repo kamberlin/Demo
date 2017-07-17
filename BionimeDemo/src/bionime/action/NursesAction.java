@@ -46,8 +46,7 @@ public class NursesAction {
 	public ModelAndView deleteNurse(@RequestParam("employeeNo") String employeeNo, Model m) {
 		nursesService.delete(employeeNo);
 		stationDetailService.deleteByNurse(employeeNo);
-		System.out.println("employeeNo=" + employeeNo);
-		return new ModelAndView("redirect:/nursesList");
+		return new ModelAndView("redirect:/nursesList", "deleteResult", true);
 	}
 
 	@RequestMapping("/viewNurse")
@@ -78,29 +77,66 @@ public class NursesAction {
 		return "nursesDetail";
 	}
 
-	@RequestMapping("/insertNurse")
-	public ModelAndView insertNurse(@RequestParam("employeeNo") String employeeNo,
-			@RequestParam("nursesName") String nursesName,
+	@RequestMapping("/modifyNurse")
+	public String modifyNurse(@RequestParam("employeeNo") String employeeNo,
+			@RequestParam("nursesName") String nursesName, @RequestParam("oriEmployeeNo") String oriEmployeeNo,
+			@RequestParam("oriNursesName") String oriNursesName,
 			@RequestParam(required = false, value = "cStationList") String[] cStationList, Model m) {
-		Nurses nurses = new Nurses();
-		NursesId nursesId = new NursesId();
-		nursesId.setEmployeeNo(employeeNo);
-		nursesId.setNursesName(nursesName);
-		nursesId.setUpdateTime(new Date());
-		nurses.setId(nursesId);
-		nursesService.add(nurses);
+		nursesService.update(employeeNo, nursesName, oriEmployeeNo, oriNursesName);
+		stationDetailService.deleteByNurse(employeeNo);
 		if (cStationList != null) {
 			for (int i = 0; i < cStationList.length; i++) {
-				String stationNo = cStationList[i];
-				StationdetailId stationDetailId = new StationdetailId();
-				stationDetailId.setEmployeeNo(employeeNo);
-				stationDetailId.setStationNo(Integer.parseInt(stationNo));
-				stationDetailId.setUpdateTime(new Date());
-				Stationdetail stationDetail = new Stationdetail();
-				stationDetail.setId(stationDetailId);
-				stationDetailService.add(stationDetail);
+				String[] station = cStationList[i].split("#");
+				if (station != null && station.length == 2) {
+					StationdetailId stationDetailId = new StationdetailId();
+					stationDetailId.setEmployeeNo(employeeNo);
+					stationDetailId.setStationNo(Integer.parseInt(station[0]));
+					stationDetailId.setStationName(station[1]);
+					stationDetailId.setUpdateTime(new Date());
+					Stationdetail stationDetail = new Stationdetail();
+					stationDetail.setId(stationDetailId);
+					stationDetailService.add(stationDetail);
+				}
 			}
 		}
-		return new ModelAndView("redirect:/addNurse");
+		m.addAttribute("modify",true);
+		viewNurse(employeeNo, m);
+		return "nursesDetail";
+	}
+
+	@RequestMapping("/insertNurse")
+	public String insertNurse(@RequestParam("employeeNo") String employeeNo,
+			@RequestParam("nursesName") String nursesName,
+			@RequestParam(required = false, value = "cStationList") String[] cStationList, Model m) {
+		if(nursesService.queryNurse(employeeNo)!=null) {
+			m.addAttribute("error",true);
+			m.addAttribute("errorMsg","員工編號"+employeeNo+" 護士已存在");
+		}else {
+			Nurses nurses = new Nurses();
+			NursesId nursesId = new NursesId();
+			nursesId.setEmployeeNo(employeeNo);
+			nursesId.setNursesName(nursesName);
+			nursesId.setUpdateTime(new Date());
+			nurses.setId(nursesId);
+			nursesService.add(nurses);
+			if (cStationList != null) {
+				for (int i = 0; i < cStationList.length; i++) {
+					String[] station = cStationList[i].split("#");
+					if (station != null && station.length == 2) {
+						StationdetailId stationDetailId = new StationdetailId();
+						stationDetailId.setEmployeeNo(employeeNo);
+						stationDetailId.setStationNo(Integer.parseInt(station[0]));
+						stationDetailId.setStationName(station[1]);
+						stationDetailId.setUpdateTime(new Date());
+						Stationdetail stationDetail = new Stationdetail();
+						stationDetail.setId(stationDetailId);
+						stationDetailService.add(stationDetail);
+					}
+				}
+			}
+			m.addAttribute("insert",true);
+			addNurse(m);
+		}
+		return "addNurse";
 	}
 }

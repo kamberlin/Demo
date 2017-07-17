@@ -1,5 +1,5 @@
-package bionime.enity;
-// Generated 2017/7/17 �U�� 04:20:23 by Hibernate Tools 5.2.3.Final
+package enity;
+// Generated 2017/7/17 �U�� 04:20:09 by Hibernate Tools 5.2.3.Final
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;

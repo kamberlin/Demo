@@ -1,6 +1,7 @@
 package bionime.dao;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -65,6 +66,26 @@ public class StationDetailDAO extends HibernateDaoSupport {
 
 	}
 
+	public void updateStation(String stationName, String oriSataionName) {
+		String sql = "update Stationdetail set station_name=:station_name where station_name=:ostation_name";
+		Session session = sessionFactory.openSession();
+		Query<Stationdetail> query = session.createQuery(sql);
+		query.setParameter("stationName", stationName);
+		query.setParameter("oriSataionName", oriSataionName);
+		query.executeUpdate();
+	}
+
+	public void updateNurse(int employeeNo, String nurseName, int oriEmployeeNo, String oriNurseName) {
+		String sql = "update Stationdetail set employee_no=:employee_no and nurse_name=:nurseName where nurseName=:oriNurse_name and employeeNo=:oriEmployee";
+		Session session = sessionFactory.openSession();
+		Query<Stationdetail> query = session.createQuery(sql);
+		 query.setParameter("employeeNo", employeeNo);
+		 query.setParameter("nurseName", nurseName);
+		 query.setParameter("oriEmployeeNo", oriEmployeeNo);
+		query.setParameter("oriNurseName", oriNurseName);
+		query.executeUpdate();
+	}
+
 	public ArrayList<Stationdetail> queryNursesOnSite(String employeeNo) {
 		String sql = "from Stationdetail where employee_no=:employeeNo";
 		Session session = sessionFactory.openSession();
@@ -76,7 +97,7 @@ public class StationDetailDAO extends HibernateDaoSupport {
 	}
 
 	public ArrayList<Stationdetail> queryOnSiteNurses(int stationNo) {
-		String sql = "from Stationdetail where station_no=:stationNo";
+		String sql = "from Stationdetail where station_no=:stationNo ";
 		Session session = sessionFactory.openSession();
 		Query<Stationdetail> query = session.createQuery(sql);
 		query.setParameter("stationNo", stationNo);

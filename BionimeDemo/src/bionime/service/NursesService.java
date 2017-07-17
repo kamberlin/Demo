@@ -15,17 +15,24 @@ public class NursesService {
 	public NursesDAO getNursesDao() {
 		return nursesDao;
 	}
-	
+
 	public void setNursesDao(NursesDAO nursesDao) {
 		this.nursesDao = nursesDao;
 	}
-	public ArrayList<Nurses> queryAll(){
+
+	public ArrayList<Nurses> queryAll() {
 		return nursesDao.queryAll();
 	}
+
 	public Nurses queryNurse(String employeeNo) {
 		return nursesDao.queryNurse(employeeNo);
 	}
+
 	public void delete(String employeeNo) {
 		nursesDao.delete(employeeNo);
+	}
+
+	public void update(String employeeNo, String nurseName, String oriEmployeeNo, String oriNurseName) {
+		nursesDao.updateNurse(employeeNo, nurseName, oriEmployeeNo, oriNurseName);
 	}
 }

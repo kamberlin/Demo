@@ -32,6 +32,7 @@ public class NursesDAO extends HibernateDaoSupport {
 		session.close();
 		return list;
 	}
+
 	public Nurses queryNurse(String employeeNo) {
 		String sql = "from Nurses where employee_no=:employeeNo";
 		Session session = sessionFactory.openSession();
@@ -40,6 +41,19 @@ public class NursesDAO extends HibernateDaoSupport {
 		Nurses nurse = query.getSingleResult();
 		session.close();
 		return nurse;
+	}
+
+	public void updateNurse(String employeeNo, String nurseName, String oriEmployeeNo, String oriNurseName) {
+		String sql = "update Nurses set employee_no=:employeeNo ,nurses_Name=:nurseName where employee_no=:oriEmployeeNo and nurses_Name=:oriNurseName";
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		Query<Nurses> query = session.createQuery(sql);
+		query.setParameter("employeeNo", employeeNo);
+		query.setParameter("nurseName", nurseName);
+		query.setParameter("oriEmployeeNo", oriEmployeeNo);
+		query.setParameter("oriNurseName", oriNurseName);
+		query.executeUpdate();
+		tx.commit();
 	}
 
 	public boolean delete(String employeeNo) {

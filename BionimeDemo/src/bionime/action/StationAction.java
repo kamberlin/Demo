@@ -2,6 +2,7 @@ package bionime.action;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -57,7 +58,7 @@ public class StationAction {
 		model.addAttribute("result",true);
 		//待調整
 		Station station = stationService.queryStation(stationNo);
-		ArrayList<Stationdetail> stationDetailList = stationDetailService.queryOnSiteNurses(stationNo);
+		List<Stationdetail> stationDetailList = stationDetailService.queryOnSiteNurses(stationNo);
 		model.addAttribute("station",station);
 		model.addAttribute("stationDetailList",stationDetailList);
 		return "stationDetail";
@@ -66,7 +67,7 @@ public class StationAction {
 	@RequestMapping("/viewStation")
 	public String view(@RequestParam("stationNo") int stationNo, Model model) {
 		Station station = stationService.queryStation(stationNo);
-		ArrayList<Stationdetail> stationDetailList = stationDetailService.queryOnSiteNurses(stationNo);
+		List<Stationdetail> stationDetailList = stationDetailService.queryOnSiteNurses(stationNo);
 		model.addAttribute("station",station);
 		model.addAttribute("stationDetailList",stationDetailList);
 		return "stationDetail";
