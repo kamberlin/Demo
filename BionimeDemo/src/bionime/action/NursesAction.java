@@ -49,12 +49,33 @@ public class NursesAction {
 		System.out.println("employeeNo=" + employeeNo);
 		return new ModelAndView("redirect:/nursesList");
 	}
+
 	@RequestMapping("/viewNurse")
 	public String viewNurse(@RequestParam("employeeNo") String employeeNo, Model m) {
-		// ArrayList<Station> stationList = stationService.query();
-		// m.addAttribute("stationList", stationList);
-		System.out.println("employeeNo=" + employeeNo);
-		return "index";
+		Nurses nurse = nursesService.queryNurse(employeeNo);
+		ArrayList<Station> stationList = stationService.queryAll();
+		ArrayList<Stationdetail> onSiteList = stationDetailService.queryNursesOnSite(employeeNo);
+		ArrayList<Station> tempList = new ArrayList<Station>();
+		if (stationList != null && stationList.size() > 0) {
+			for (int i = 0; i < stationList.size(); i++) {
+				Station station = stationList.get(i);
+				if (onSiteList != null && onSiteList.size() > 0) {
+					for (int j = 0; j < onSiteList.size(); j++) {
+						Stationdetail siteDetail = onSiteList.get(j);
+						if (station.getStationNo() == siteDetail.getId().getStationNo()) {
+							tempList.add(station);
+						}
+					}
+				}
+			}
+		}
+		for (int i = 0; i < tempList.size(); i++) {
+			stationList.remove(tempList.get(i));
+		}
+		m.addAttribute("nurse", nurse);
+		m.addAttribute("stationList", stationList);
+		m.addAttribute("onSiteList", onSiteList);
+		return "nursesDetail";
 	}
 
 	@RequestMapping("/insertNurse")

@@ -32,6 +32,15 @@ public class NursesDAO extends HibernateDaoSupport {
 		session.close();
 		return list;
 	}
+	public Nurses queryNurse(String employeeNo) {
+		String sql = "from Nurses where employee_no=:employeeNo";
+		Session session = sessionFactory.openSession();
+		Query<Nurses> query = session.createQuery(sql);
+		query.setParameter("employeeNo", employeeNo);
+		Nurses nurse = query.getSingleResult();
+		session.close();
+		return nurse;
+	}
 
 	public boolean delete(String employeeNo) {
 		boolean flag = false;
